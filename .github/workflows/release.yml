@@ -58,4 +58,4 @@ jobs:
         run: |
           set -euo pipefail
           version="${GITHUB_REF_NAME#v}"
-          gh release create "$GITHUB_REF_NAME" "dist/MacFalcon-$version-universal.dmg" dist/SHA256SUMS.txt --title "MacFalcon $version" --generate-notes --verify-tag
+          gh release create "$GITHUB_REF_NAME" "dist/MacFalcon-$version-universal.dmg" dist/SHA256SUMS.txt --title "MacFalcon $version" --notes-file docs/RELEASE_NOTES.md --generate-notes --verify-tag

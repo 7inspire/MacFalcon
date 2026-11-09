@@ -1,7 +1,7 @@
 #!/bin/bash
 set -euo pipefail
 cd "$(dirname "$0")/.."
-ICON_TEMP="$(mktemp -d "${TMPDIR:-/tmp}/pulse-icon.XXXXXX")"
+ICON_TEMP="$(mktemp -d "${TMPDIR:-/tmp}/macfalcon-icon.XXXXXX")"
 trap 'rm -rf "$ICON_TEMP"' EXIT
 for size in 16 32 64 128 256 512 1024; do
   sips -z "$size" "$size" Assets/AppIcon.png --out "$ICON_TEMP/$size.png" >/dev/null
