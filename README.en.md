@@ -1,7 +1,7 @@
 <div align="center">
   <img src="Assets/AppIcon-preview.png" width="96" alt="MacFalcon icon">
   <h1>MacFalcon</h1>
-  <p><strong>A clearer view of your Mac.</strong><br>A native, privacy-minded system monitor for macOS.</p>
+  <p><strong>A lightweight Mac Activity Monitor alternative, fast like a Falcon.</strong><br>一款轻量级的 Mac 活动监视器替代工具，速度快如猎隼。</p>
   <p><a href="README.md">简体中文</a> · <a href="README.en.md">English</a> · <a href="https://github.com/7inspire/MacFalcon/releases">Download Releases</a></p>
   <p><img alt="macOS 13+" src="https://img.shields.io/badge/macOS-13%2B-242d30"> <img alt="Apple Silicon and Intel" src="https://img.shields.io/badge/Apple%20Silicon%20%2B%20Intel-universal-176f59"> <a href="LICENSE"><img alt="MIT License" src="https://img.shields.io/badge/license-MIT-176f59"></a></p>
 </div>
