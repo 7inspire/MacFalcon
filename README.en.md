@@ -15,7 +15,7 @@ MacFalcon brings process management, performance monitoring, and everyday diagno
 1. Download the latest `MacFalcon-<version>-universal.dmg` from [Releases](https://github.com/7inspire/MacFalcon/releases).
 2. Open the disk image, drag **MacFalcon** to **Applications**, and open it from your Applications folder.
 
-Official release packages are intended to be signed with Developer ID and notarized by Apple; no package will be presented as an official release until those steps are complete. Requires **macOS 13 or later**. Universal builds contain Apple Silicon and Intel binaries; the Intel build has been compiled but still needs testing on a physical Intel Mac.
+Current releases are ad-hoc signed and are **not Developer ID signed or notarized by Apple**. macOS displays a security warning on first launch. If you trust the download, try opening it once, then go to System Settings → Privacy & Security → Open Anyway. This creates a security exception for the app; managed devices may disallow it. See [Apple Support](https://support.apple.com/en-us/102445). Requires **macOS 13 or later**. Universal builds contain Apple Silicon and Intel binaries; the Intel build has been compiled but still needs testing on a physical Intel Mac.
 
 Optional integrity check: place the downloaded DMG and `SHA256SUMS.txt` in the same directory, then run `shasum -a 256 -c SHA256SUMS.txt`.
 

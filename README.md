@@ -15,7 +15,7 @@ MacFalcon 将进程管理、性能监控和日常排障放进一个原生应用�
 1. 在 [Releases](https://github.com/7inspire/MacFalcon/releases) 下载最新的 `MacFalcon-<版本>-universal.dmg`。
 2. 打开磁盘映像，将 **MacFalcon** 拖到 **Applications**，再从应用程序文件夹打开。
 
-正式发布包会通过 Developer ID 签名并提交 Apple 公证；在签名与公证完成之前，不会发布标称正式版本的安装包。系统要求为 **macOS 13 或更新版本**，通用构建包含 Apple Silicon 和 Intel 架构。Intel 架构已编译，尚需在真实 Intel Mac 上进行运行验证。
+目前发布包使用临时签名，**未经 Developer ID 签名或 Apple 公证**。首次打开时 macOS 会显示安全提示；确认下载来源可信后，可先尝试打开，再前往“系统设置 → 隐私与安全性 → 仍要打开”。这一操作会为该应用建立安全例外；受管理设备可能不允许。详见 [Apple 说明](https://support.apple.com/zh-cn/102445)。系统要求为 **macOS 13 或更新版本**，通用构建包含 Apple Silicon 和 Intel 架构。Intel 架构已编译，尚需在真实 Intel Mac 上进行运行验证。
 
 可选校验：将下载的 DMG 与 `SHA256SUMS.txt` 放在同一目录，运行 `shasum -a 256 -c SHA256SUMS.txt`。
 

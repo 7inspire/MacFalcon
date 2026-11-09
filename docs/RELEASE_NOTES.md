@@ -4,9 +4,9 @@ Native macOS system monitoring and process management · 原生 macOS 系统监�
 
 ### Install / 安装
 
-Download the universal DMG, open it, and drag MacFalcon to Applications. Requires macOS 13 or later. The package is Developer ID signed and Apple notarized. Intel support is compiled but has not yet been verified on physical Intel hardware.
+Download the universal DMG, open it, and drag MacFalcon to Applications. Requires macOS 13 or later. The app is ad-hoc signed and is **not signed with Developer ID or notarized by Apple**. macOS will show a security warning; if you trust the download, try to open it once, then use System Settings → Privacy & Security → Open Anyway. Intel support is compiled but has not yet been verified on physical Intel hardware.
 
-下载通用 DMG，打开后将 MacFalcon 拖入“应用程序”。需要 macOS 13 或更高版本。此安装包已使用 Developer ID 签名并经 Apple 公证。Intel 版本已编译，但尚未在 Intel 真机上验证。
+下载通用 DMG，打开后将 MacFalcon 拖入“应用程序”。需要 macOS 13 或更高版本。此应用为临时签名，**未使用 Developer ID 签名，也未经 Apple 公证**。首次打开会出现安全提示；确认信任下载来源后，可先尝试打开，再前往“系统设置 → 隐私与安全性 → 仍要打开”。Intel 版本已编译，但尚未在 Intel 真机上验证。
 
 ### Highlights / 主要功能
 
