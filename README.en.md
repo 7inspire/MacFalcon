@@ -12,6 +12,14 @@ MacFalcon brings process management, performance monitoring, and everyday diagno
 
 ## Screenshots
 
+**Overview** — Key metrics at glance
+
+![MacFalcon 概览界面](Assets/screenshots/overview-zh.jpg)
+
+**Process** — Inspect and manage running processes
+
+![MacFalcon 进程界面](Assets/screenshots/process-zh.jpg)
+
 **Appearance and sampling** — Choose an appearance mode, accent color, language, and refresh interval.
 
 ![MacFalcon appearance and sampling settings in Chinese](Assets/screenshots/settings-zh.jpg)

@@ -12,6 +12,14 @@ MacFalcon 将进程管理、性能监控和日常排障放进一个原生应用�
 
 ## 界面预览
 
+**概览** — 关键指标一览
+
+![MacFalcon 概览界面](Assets/screenshots/overview-zh.jpg)
+
+**进程** — 查看和管理正在运行的进程
+
+![MacFalcon 进程界面](Assets/screenshots/process-zh.jpg)
+
 **外观与采样设置** — 选择界面模式、强调色、语言和刷新间隔。
 
 ![MacFalcon 外观与采样设置界面](Assets/screenshots/settings-zh.jpg)
