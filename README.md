@@ -32,6 +32,16 @@ MacFalcon 将进程管理、性能监控和日常排障放进一个原生应用�
 
 默认每 3 秒采样；窗口隐藏或最小化时暂停采样，可在设置中选择每分钟后台采样。按 `⌘1` 至 `⌘8` 切换页面。实际资源开销因设备、进程数量和刷新间隔而异。
 
+## 界面预览
+
+**外观与采样设置** — 选择界面模式、强调色、语言和刷新间隔。
+
+![MacFalcon 外观与采样设置界面](Assets/screenshots/settings-zh.jpg)
+
+**诊断** — 按需查找连接、端口和文件占用。
+
+![MacFalcon 诊断界面](Assets/screenshots/diagnostics-zh.jpg)
+
 ## 从源码构建
 
 需要 macOS 13+ 和 Xcode 或 Xcode Command Line Tools：

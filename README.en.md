@@ -32,6 +32,18 @@ Optional integrity check: place the downloaded DMG and `SHA256SUMS.txt` in the s
 
 The default sampling interval is three seconds. Sampling pauses while all windows are hidden or minimized; an optional setting enables once-per-minute background sampling. Use `⌘1` through `⌘8` to navigate. Actual resource usage depends on hardware, process count, page, and interval.
 
+## Screenshots
+
+**Appearance and sampling** — Choose an appearance mode, accent color, language, and refresh interval.
+
+![MacFalcon appearance and sampling settings in Chinese](Assets/screenshots/settings-zh.jpg)
+
+**Diagnostics** — Inspect connections, ports, and open files on demand.
+
+![MacFalcon diagnostics screen in Chinese](Assets/screenshots/diagnostics-zh.jpg)
+
+Screenshots show the Chinese interface; English is also available in the app.
+
 ## Build from source
 
 Requires macOS 13+ and Xcode or Xcode Command Line Tools:
