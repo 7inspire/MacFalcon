@@ -31,8 +31,8 @@ jobs:
           if gh release view "$GITHUB_REF_NAME" >/dev/null 2>&1; then echo 'Release already exists; refusing to replace assets.' >&2; exit 1; fi
       - name: Test
         run: swift test
-      - name: Build universal app
-        run: MACFALCON_UNIVERSAL=1 ./scripts/build-app.sh
+      - name: Build Apple Silicon app
+        run: ./scripts/build-app.sh
       - name: Import Developer ID, notarize and package
         shell: bash
         run: |
@@ -55,4 +55,4 @@ jobs:
         run: |
           set -euo pipefail
           version="${GITHUB_REF_NAME#v}"
-          gh release create "$GITHUB_REF_NAME" "dist/MacFalcon-$version-universal.dmg" dist/SHA256SUMS.txt --title "MacFalcon $version" --notes-file docs/RELEASE_NOTES_NOTARIZED.md --generate-notes --verify-tag
+          gh release create "$GITHUB_REF_NAME" "dist/MacFalcon-$version-arm64.dmg" dist/SHA256SUMS.txt --title "MacFalcon $version" --notes-file docs/RELEASE_NOTES_NOTARIZED.md --generate-notes --verify-tag

@@ -6,8 +6,7 @@ if [[ ! "$VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
   printf 'Invalid version: expected MAJOR.MINOR.PATCH\n' >&2
   exit 1
 fi
-ARGS=(-c release)
-if [[ "${MACFALCON_UNIVERSAL:-0}" == "1" ]]; then ARGS+=(--arch arm64 --arch x86_64); fi
+ARGS=(-c release --arch arm64)
 swift build "${ARGS[@]}" "$@"
 BIN_DIR="$(swift build "${ARGS[@]}" --show-bin-path "$@")"
 APP="$(pwd)/dist/MacFalcon.app"

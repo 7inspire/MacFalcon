@@ -3,7 +3,7 @@
   <h1>MacFalcon</h1>
   <p><strong>一款轻量级的 Mac 活动监视器替代工具，速度快如猎隼。</strong><br>A lightweight Mac Activity Monitor alternative, fast like a Falcon.</p>
   <p><a href="README.md">简体中文</a> · <a href="README.en.md">English</a> · <a href="https://github.com/7inspire/MacFalcon/releases">下载 Releases</a></p>
-  <p><img alt="macOS 13+" src="https://img.shields.io/badge/macOS-13%2B-242d30"> <img alt="Apple Silicon and Intel" src="https://img.shields.io/badge/Apple%20Silicon%20%2B%20Intel-universal-176f59"> <a href="LICENSE"><img alt="MIT License" src="https://img.shields.io/badge/license-MIT-176f59"></a></p>
+  <p><img alt="macOS 13+" src="https://img.shields.io/badge/macOS-13%2B-242d30"> <img alt="Apple Silicon" src="https://img.shields.io/badge/Apple%20Silicon-arm64-176f59"> <a href="LICENSE"><img alt="MIT License" src="https://img.shields.io/badge/license-MIT-176f59"></a></p>
 </div>
 
 ![MacFalcon artwork: a clearer view of your Mac](Assets/banner.svg)
@@ -30,10 +30,10 @@ MacFalcon 将进程管理、性能监控和日常排障放进一个原生应用�
 
 ## 下载与安装
 
-1. 在 [Releases](https://github.com/7inspire/MacFalcon/releases) 下载最新的 `MacFalcon-<版本>-universal.dmg`。
+1. 在 [Releases](https://github.com/7inspire/MacFalcon/releases) 下载最新的 `MacFalcon-<版本>-arm64.dmg`。
 2. 打开磁盘映像，将 **MacFalcon** 拖到 **Applications**，再从应用程序文件夹打开。
 
-目前发布包使用临时签名，**未经 Developer ID 签名或 Apple 公证**。首次打开时 macOS 会显示安全提示；确认下载来源可信后，可先尝试打开，再前往“系统设置 → 隐私与安全性 → 仍要打开”。这一操作会为该应用建立安全例外；受管理设备可能不允许。详见 [Apple 说明](https://support.apple.com/zh-cn/102445)。系统要求为 **macOS 13 或更新版本**，通用构建包含 Apple Silicon 和 Intel 架构。Intel 架构已编译，尚需在真实 Intel Mac 上进行运行验证。
+目前发布包使用临时签名，**未经 Developer ID 签名或 Apple 公证**。首次打开时 macOS 会显示安全提示；确认下载来源可信后，可先尝试打开，再前往“系统设置 → 隐私与安全性 → 仍要打开”。这一操作会为该应用建立安全例外；受管理设备可能不允许。详见 [Apple 说明](https://support.apple.com/zh-cn/102445)。系统要求为 **Apple Silicon 芯片和 macOS 13 或更新版本**；当前版本不支持 Intel Mac。
 
 可选校验：将下载的 DMG 与 `SHA256SUMS.txt` 放在同一目录，运行 `shasum -a 256 -c SHA256SUMS.txt`。
 
@@ -63,7 +63,7 @@ swift test
 open dist/MacFalcon.app
 ```
 
-默认构建当前机器架构；运行 `MACFALCON_UNIVERSAL=1 ./scripts/build-app.sh` 构建通用版本。本地构建仅使用临时签名，不等同于公证后的发行包。发布流程和签名配置见 [发布指南](docs/RELEASING.md)。
+构建脚本生成 Apple Silicon 版本。本地构建仅使用临时签名，不等同于公证后的发行包。发布流程和签名配置见 [发布指南](docs/RELEASING.md)。
 
 ## 隐私与限制
 

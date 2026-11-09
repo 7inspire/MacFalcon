@@ -8,9 +8,9 @@ cd "$(dirname "$0")/.."
 : "${APPLE_APP_SPECIFIC_PASSWORD:?Set APPLE_APP_SPECIFIC_PASSWORD}"
 VERSION="${MACFALCON_VERSION:-$(tr -d '[:space:]' < VERSION)}"
 APP="$(pwd)/dist/MacFalcon.app"
-DMG="$(pwd)/dist/MacFalcon-$VERSION-universal.dmg"
+DMG="$(pwd)/dist/MacFalcon-$VERSION-arm64.dmg"
 [[ -d "$APP" ]] || { echo 'Build the app first.' >&2; exit 1; }
-[[ "$(lipo -archs "$APP/Contents/MacOS/MacFalcon")" == *arm64* && "$(lipo -archs "$APP/Contents/MacOS/MacFalcon")" == *x86_64* ]] || { echo 'Release requires a universal binary.' >&2; exit 1; }
+[[ "$(lipo -archs "$APP/Contents/MacOS/MacFalcon")" == "arm64" ]] || { echo 'Release requires an Apple Silicon (arm64) binary.' >&2; exit 1; }
 [[ ! -e "$DMG" ]] || { echo "Release DMG already exists; remove it explicitly before retrying." >&2; exit 1; }
 TEMP="$(mktemp -d "${TMPDIR:-/tmp}/macfalcon-notary.XXXXXX")"
 trap 'rm -rf "$TEMP"' EXIT

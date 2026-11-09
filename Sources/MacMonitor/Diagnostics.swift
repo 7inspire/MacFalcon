@@ -88,17 +88,23 @@ struct DiagnosticsView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 14) {
             HStack {
-                Picker(tr("诊断类型"), selection: $mode) { Text(tr("连接与端口")).tag(0); Text(tr("文件占用")).tag(1) }.pickerStyle(.segmented).frame(width: 250)
-                if mode == 1 {
-                    Button(tr("选择文件或文件夹…")) { let panel = NSOpenPanel(); panel.canChooseFiles = true; panel.canChooseDirectories = true; panel.allowsMultipleSelection = false; if panel.runModal() == .OK { path = panel.url } }
-                    Toggle(tr("递归文件夹"), isOn: $recursive).toggleStyle(.checkbox)
-                }
+                Picker(tr("诊断类型"), selection: $mode) { Text(tr("连接与端口")).tag(0); Text(tr("文件占用")).tag(1) }
+                    .labelsHidden()
+                    .pickerStyle(.segmented)
+                    .fixedSize()
                 Spacer()
                 if scanner.working { Button(tr("取消")) { scanner.cancel() } }
                 else { Button(tr("开始扫描")) { scanner.scan(path: mode == 1 ? path : nil, recursive: mode == 1 && recursive && (path?.hasDirectoryPath ?? false)) }.disabled(mode == 1 && path == nil) }
             }
+            if mode == 1 {
+                HStack {
+                    Button(tr("选择文件或文件夹…")) { let panel = NSOpenPanel(); panel.canChooseFiles = true; panel.canChooseDirectories = true; panel.allowsMultipleSelection = false; if panel.runModal() == .OK { path = panel.url } }
+                    Toggle(tr("递归文件夹"), isOn: $recursive).toggleStyle(.checkbox)
+                }
+            }
             if let path, mode == 1 { Text(path.path).font(.system(size: 11)).foregroundStyle(muted).textSelection(.enabled) }
-            HStack { TextField(tr("筛选进程、PID、端口或路径"), text: $filter).textFieldStyle(.roundedBorder).frame(maxWidth: 320); Spacer(); Text(scanner.message).foregroundStyle(muted).font(.system(size: 11)) }
+            TextField(tr("筛选进程、PID、端口或路径"), text: $filter).textFieldStyle(.roundedBorder).frame(maxWidth: 320)
+            Text(scanner.message).foregroundStyle(muted).font(.system(size: 11))
             Card { VStack(alignment: .leading, spacing: 0) {
                 HStack { Text(tr("进程 / PID")).frame(width: 170, alignment: .leading); Text(tr("协议 / FD")).frame(width: 100, alignment: .leading); Text(tr("地址或文件")).frame(maxWidth: .infinity, alignment: .leading); Text(tr("状态")).frame(width: 90, alignment: .leading) }.font(.system(size: 10, weight: .semibold)).foregroundStyle(muted).padding(.bottom, 10)
                 Divider()

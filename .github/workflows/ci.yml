@@ -13,10 +13,10 @@ jobs:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
       - name: Run tests
         run: swift test
-      - name: Build universal application
-        run: MACFALCON_UNIVERSAL=1 ./scripts/build-app.sh
-      - name: Verify both architectures and bundle
+      - name: Build Apple Silicon application
+        run: ./scripts/build-app.sh
+      - name: Verify architecture and bundle
         run: |
-          lipo dist/MacFalcon.app/Contents/MacOS/MacFalcon -verify_arch arm64 x86_64
+          [[ "$(lipo -archs dist/MacFalcon.app/Contents/MacOS/MacFalcon)" == "arm64" ]]
           codesign --verify --strict --verbose=2 dist/MacFalcon.app
           plutil -lint dist/MacFalcon.app/Contents/Info.plist
