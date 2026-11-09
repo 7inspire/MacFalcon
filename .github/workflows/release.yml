@@ -8,6 +8,7 @@ permissions:
   contents: write
 jobs:
   release:
+    if: ${{ vars.MACFALCON_RELEASE_MODE != 'notarized' }}
     runs-on: macos-15
     timeout-minutes: 45
     env:

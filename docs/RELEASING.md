@@ -15,7 +15,7 @@
 
 ### 可选：以后改为 Developer ID 与公证
 
-如以后加入 Apple Developer Program，可使用手动触发的 **Optional notarized release** 工作流。它要求一个尚未发布的版本 tag，不能覆盖现有 Release；不要同时用默认工作流为同一个 tag 发布。需要在仓库 **Settings → Secrets and variables → Actions** 设置下列 Secrets：
+如以后加入 Apple Developer Program，可使用手动触发的 **Optional notarized release** 工作流。它要求一个尚未发布的版本 tag，不能覆盖现有 Release。推送该 tag 前，将仓库 Actions 变量 `MACFALCON_RELEASE_MODE` 设为 `notarized`，使默认临时签名工作流跳过；随后手动为该 tag 运行公证工作流。需要在仓库 **Settings → Secrets and variables → Actions** 设置下列 Secrets：
 
 | Secret | 内容 |
 | --- | --- |
@@ -34,4 +34,4 @@ The default release workflow **does not require the Apple Developer Program**. G
 
 Update `VERSION`, push to `main`, then push the matching version tag (for example `v0.1.0`). **Release (ad-hoc signed)** tests, builds, packages, and publishes the DMG and checksum. Existing releases are never overwritten. Verify downloads on clean Apple Silicon and Intel machines; Intel has only been compiled so far.
 
-If you later obtain a Developer ID Application certificate and Apple notarization credentials, the manually triggered **Optional notarized release** workflow supports a new, unpublished tag. It requires the six secrets in the table above. Do not commit or share credentials in chat. Protect release tags and restrict who can run signing workflows.
+If you later obtain a Developer ID Application certificate and Apple notarization credentials, the manually triggered **Optional notarized release** workflow supports a new, unpublished tag. Before pushing that tag, set the repository Actions variable `MACFALCON_RELEASE_MODE` to `notarized` to skip the default release workflow, then manually run the notarized workflow for the tag. It requires the six secrets in the table above. Do not commit or share credentials in chat. Protect release tags and restrict who can run signing workflows.
