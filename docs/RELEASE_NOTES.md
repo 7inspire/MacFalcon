@@ -10,10 +10,14 @@ Download the Apple Silicon DMG, open it, and drag MacFalcon to Applications. Req
 
 ### Changes / 更新
 
-- Fix the English diagnostics layout and improve spacing for file diagnostics.
-- Release packages now target Apple Silicon only.
-- 修复英文诊断页面布局，并优化文件诊断选项的间距。
-- 发行包现仅支持 Apple Silicon。
+- Add in-app update checks, background downloads, and installation with Sparkle.
+- Verify both update feeds and downloaded packages with EdDSA signatures.
+- 新增应用内更新检查、后台下载和安装功能。
+- 更新源及下载包均使用 EdDSA 签名验证。
+
+This is the first Sparkle-enabled release. Install it once from this page; subsequent versions can update in the app.
+
+这是首个支持 Sparkle 自动更新的正式版本，请先从本页面安装；后续版本可在应用内更新。
 
 ### Highlights / 主要功能
 
