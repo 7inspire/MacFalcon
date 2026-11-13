@@ -39,9 +39,13 @@ jobs:
           version="${GITHUB_REF_NAME#v}"
           hdiutil verify "dist/MacFalcon-$version-arm64.dmg"
           (cd dist && shasum -a 256 "MacFalcon-$version-arm64.dmg" > SHA256SUMS.txt)
+      - name: Create signed update feed
+        env:
+          SPARKLE_PRIVATE_KEY: ${{ secrets.SPARKLE_PRIVATE_KEY }}
+        run: bash scripts/create-appcast.sh
       - name: Publish release
         shell: bash
         run: |
           set -euo pipefail
           version="${GITHUB_REF_NAME#v}"
-          gh release create "$GITHUB_REF_NAME" "dist/MacFalcon-$version-arm64.dmg" dist/SHA256SUMS.txt --title "MacFalcon $version" --notes-file docs/RELEASE_NOTES.md --generate-notes --verify-tag
+          gh release create "$GITHUB_REF_NAME" "dist/MacFalcon-$version-arm64.dmg" dist/SHA256SUMS.txt dist/appcast.xml --title "MacFalcon $version" --notes-file docs/RELEASE_NOTES.md --generate-notes --verify-tag

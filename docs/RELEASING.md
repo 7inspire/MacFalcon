@@ -6,11 +6,13 @@
 
 默认 Release 流程**不需要 Apple Developer Program**：GitHub Actions 构建 Apple Silicon（arm64）DMG，以临时签名（ad-hoc）保护包的完整性，并生成 SHA-256 校验文件。临时签名不能证明开发者身份；发行包未经 Apple 公证。macOS 首次打开时会出现安全提示，用户在确认下载来源可信后，需要按照 [Apple 的说明](https://support.apple.com/zh-cn/102445)手动在“系统设置 → 隐私与安全性”允许打开。受管理的 Mac 可能不允许此操作。
 
+应用使用 Sparkle 自动检查和下载更新，并校验更新源及安装包的 EdDSA 签名。发布前须将与应用内公钥匹配的私钥配置为仓库 Actions Secret `SPARKLE_PRIVATE_KEY`。私钥保存在维护者的钥匙串中，必须妥善备份；不要提交到仓库或发送到聊天。没有 Developer ID 签名时，丢失私钥会使已安装版本无法安全地迁移到新密钥。安装第一个支持 Sparkle 的版本仍需从 GitHub 下载；之后的签名版本可在应用内更新。
+
 ### 免费发布
 
 1. 更新 `VERSION` 为 `MAJOR.MINOR.PATCH` 格式，提交并推送到 `main`；等待 **Build and test** 通过。
 2. 创建并推送匹配版本的 tag，例如 `git tag v0.1.0`，然后 `git push origin v0.1.0`。
-3. **Release (ad-hoc signed)** 工作流自动测试、构建 Apple Silicon 应用、打包并验证 DMG，然后将 DMG、`SHA256SUMS.txt` 和中英文说明发布到 GitHub Releases。仓库需允许 Actions 且允许工作流写入 Contents。若 Release 已存在，工作流会停止，不覆盖现有资产。
+3. **Release (ad-hoc signed)** 工作流自动测试、构建 Apple Silicon 应用、打包并验证 DMG，使用 `SPARKLE_PRIVATE_KEY` 签名生成 `appcast.xml`，然后发布 DMG、更新源、`SHA256SUMS.txt` 和中英文说明。仓库需允许 Actions 且允许工作流写入 Contents。若 Release 已存在，工作流会停止，不覆盖现有资产。
 4. 从 Releases 下载并在干净的 Apple Silicon Mac 上验证安装与首次启动。
 
 ### 可选：以后改为 Developer ID 与公证
@@ -31,6 +33,8 @@
 ## English
 
 The default release workflow **does not require the Apple Developer Program**. GitHub Actions builds an Apple Silicon (arm64) DMG with an ad-hoc signature and SHA-256 checksum. Ad-hoc signing does not establish developer identity and the app is not notarized by Apple. On first launch macOS shows a security warning. If you trust the download, follow [Apple's instructions](https://support.apple.com/en-us/102445) to open it via System Settings → Privacy & Security. Managed devices may not permit this exception.
+
+Sparkle checks for and downloads updates, validating EdDSA signatures on both the feed and the archive. Configure the matching private key as the repository Actions secret `SPARKLE_PRIVATE_KEY` before publishing. Keep a secure backup and never commit or share it. Without a Developer ID signature, losing this key prevents safely rotating it for existing installations. Users must install the first Sparkle-enabled release manually; subsequent signed releases can update in the app.
 
 Update `VERSION`, push to `main`, then push the matching version tag (for example `v0.1.0`). **Release (ad-hoc signed)** tests, builds, packages, and publishes the DMG and checksum. Existing releases are never overwritten. Verify downloads on a clean Apple Silicon Mac.
 

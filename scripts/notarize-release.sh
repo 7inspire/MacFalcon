@@ -24,6 +24,7 @@ print('Notarization:', result.get('status', 'unknown'), '| ID:', result.get('id'
 if result.get('status') != 'Accepted': sys.exit(1)
 PY
 }
+codesign --force --deep --options runtime --timestamp --sign "$MACFALCON_SIGN_IDENTITY" "$APP/Contents/Frameworks/Sparkle.framework"
 codesign --force --options runtime --timestamp --sign "$MACFALCON_SIGN_IDENTITY" "$APP"
 codesign --verify --deep --strict --verbose=2 "$APP"
 ditto -c -k --keepParent "$APP" "$TEMP/MacFalcon.zip"

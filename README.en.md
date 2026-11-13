@@ -39,6 +39,8 @@ Current releases are ad-hoc signed and are **not Developer ID signed or notarize
 
 Optional integrity check: place the downloaded DMG and `SHA256SUMS.txt` in the same directory, then run `shasum -a 256 -c SHA256SUMS.txt`.
 
+Install a version with automatic updates first; subsequent signed updates are checked and downloaded by the app. Update dialogs follow the macOS system language.
+
 ## Features
 
 | Feature | What it does |
@@ -69,7 +71,7 @@ The build script targets Apple Silicon. Local builds are ad-hoc signed and are n
 
 ## Privacy and limitations
 
-- Samples and history stay on your Mac. There is no telemetry or automatic update check. History is stored at `~/Library/Application Support/MacFalcon/history.sqlite3`. On upgrade from the earlier Pulse build, supported settings and history are copied while the old data is retained.
+- Samples and history stay on your Mac; there is no telemetry. The app checks GitHub for signed updates and downloads them in the background. You can also check manually from the app menu or Settings. History is stored at `~/Library/Application Support/MacFalcon/history.sqlite3`. On upgrade from the earlier Pulse build, supported settings and history are copied while the old data is retained.
 - Operations run with the current user's permissions; protected processes, files, ports, and services can be hidden or inaccessible. File and connection diagnostics invoke the system `lsof` on demand; recursive folder scans may be slow.
 - GPU utilization, battery capacity, and related readings come from device registry properties and vary by hardware; they are not Apple's official battery-health assessment. Network totals may double-count VPN or virtual interfaces; app-group memory sums may double-count shared pages.
 - Ending a process tree uses a snapshot and is not atomic; ending processes or stopping services can lose data or trigger restarts. CPU temperature, power, SMART details, and per-process network traffic are not implemented. See the [roadmap](ROADMAP.md).

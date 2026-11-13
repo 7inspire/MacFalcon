@@ -16,6 +16,7 @@ func tr(_ chinese: String) -> String { translate(chinese, language: AppLanguage.
 func bilingual(_ chinese: String, _ english: String) -> String { AppLanguage.isEnglish ? english : chinese }
 
 private let englishTranslations: [String: String] = [
+    "检查更新…": "Check for Updates…",
     "外观": "Appearance", "视觉风格与语言": "Style and language", "模式": "Mode", "选择浅色、深色或跟随系统。": "Choose light, dark, or follow the system.",
     "跟随系统": "System", "浅色": "Light", "深色": "Dark", "强调色": "Accent color", "用于选中状态、按钮和图表。": "Used for selections, buttons, and charts.",
     "薄荷绿": "Mint", "蓝色": "Blue", "紫色": "Purple", "橙色": "Orange", "语言": "Language", "更改立即生效。": "Changes apply immediately.",

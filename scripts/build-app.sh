@@ -11,6 +11,10 @@ swift build "${ARGS[@]}" "$@"
 BIN_DIR="$(swift build "${ARGS[@]}" --show-bin-path "$@")"
 APP="$(pwd)/dist/MacFalcon.app"
 mkdir -p "$APP/Contents/MacOS" "$APP/Contents/Resources"
+mkdir -p "$APP/Contents/Frameworks"
+FRAMEWORK="${MACFALCON_SPARKLE_FRAMEWORK:-$(pwd)/.build/artifacts/mac-monitor/Sparkle/Sparkle.xcframework/macos-arm64_x86_64/Sparkle.framework}"
+[[ -d "$FRAMEWORK" ]] || { echo 'Sparkle framework not found in SwiftPM artifacts.' >&2; exit 1; }
+ditto "$FRAMEWORK" "$APP/Contents/Frameworks/Sparkle.framework"
 cp Assets/AppIcon.icns "$APP/Contents/Resources/AppIcon.icns"
 cp "$BIN_DIR/MacMonitor" "$APP/Contents/MacOS/MacFalcon"
 cat > "$APP/Contents/Info.plist" <<PLIST
@@ -21,12 +25,20 @@ cat > "$APP/Contents/Info.plist" <<PLIST
 <key>CFBundleIdentifier</key><string>io.github.7inspire.MacFalcon</string>
 <key>CFBundleName</key><string>MacFalcon</string>
 <key>CFBundleDisplayName</key><string>MacFalcon</string>
+<key>CFBundleDevelopmentRegion</key><string>en</string>
+<key>CFBundleLocalizations</key><array><string>en</string><string>zh-Hans</string></array>
 <key>CFBundleIconFile</key><string>AppIcon</string>
 <key>CFBundlePackageType</key><string>APPL</string>
 <key>CFBundleShortVersionString</key><string>$VERSION</string>
 <key>CFBundleVersion</key><string>$VERSION</string>
 <key>LSMinimumSystemVersion</key><string>13.0</string>
 <key>NSHighResolutionCapable</key><true/>
+<key>SUFeedURL</key><string>https://github.com/7inspire/MacFalcon/releases/latest/download/appcast.xml</string>
+<key>SUPublicEDKey</key><string>lT9TwcuuUrk7ko+WaVA8GUCMv33TYrAndjfZyNDrihI=</string>
+<key>SUEnableAutomaticChecks</key><true/>
+<key>SUAutomaticallyUpdate</key><true/>
+<key>SUVerifyUpdateBeforeExtraction</key><true/>
+<key>SURequireSignedFeed</key><true/>
 </dict></plist>
 PLIST
 # Local builds are ad-hoc signed. A release must replace this with Developer ID.

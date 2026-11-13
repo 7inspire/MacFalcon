@@ -5,12 +5,14 @@ import Darwin
 import MonitorCore
 import ServiceManagement
 import Metal
+import Sparkle
 
 private func bundledApplicationIcon() -> NSImage? {
     guard let url = Bundle.main.url(forResource: "AppIcon", withExtension: "icns") else { return nil }
     return NSImage(contentsOf: url)
 }
 final class MacFalconAppDelegate: NSObject, NSApplicationDelegate {
+    let updater = SPUStandardUpdaterController(startingUpdater: true, updaterDelegate: nil, userDriverDelegate: nil)
     func applicationDidFinishLaunching(_ notification: Notification) {
         if let icon = bundledApplicationIcon() { NSApp.applicationIconImage = icon }
     }
@@ -23,9 +25,9 @@ final class MacFalconAppDelegate: NSObject, NSApplicationDelegate {
     @AppStorage("appLanguage") private var appLanguage = "system"
     @AppStorage("accentColor") private var accentColor = "mint"
     var body: some Scene {
-        WindowGroup("MacFalcon", id: "main") { ContentView().environmentObject(monitor).environment(\.locale, Locale(identifier: AppLanguage.resolve(appLanguage))).tint(paletteAccent(for: accentColor)).preferredColorScheme(selectedColorScheme(appearanceMode)).frame(minWidth: 960, minHeight: 640) }
+        WindowGroup("MacFalcon", id: "main") { ContentView(checkForUpdates: { appDelegate.updater.checkForUpdates(nil) }).environmentObject(monitor).environment(\.locale, Locale(identifier: AppLanguage.resolve(appLanguage))).tint(paletteAccent(for: accentColor)).preferredColorScheme(selectedColorScheme(appearanceMode)).frame(minWidth: 960, minHeight: 640) }
             .windowStyle(.hiddenTitleBar)
-            .commands { CommandGroup(after: .appInfo) { Button(tr("刷新数据")) { monitor.refresh() }.keyboardShortcut("r") } }
+            .commands { CommandGroup(after: .appInfo) { Button(tr("检查更新…")) { appDelegate.updater.checkForUpdates(nil) }; Button(tr("刷新数据")) { monitor.refresh() }.keyboardShortcut("r") } }
         MenuBarExtra("MacFalcon", systemImage: "waveform.path.ecg") { StatusMenu().environmentObject(monitor).environment(\.locale, Locale(identifier: AppLanguage.resolve(appLanguage))) }
     }
 }
@@ -40,6 +42,7 @@ private enum Page: String, CaseIterable, Identifiable {
 
 struct ContentView: View {
     @EnvironmentObject var monitor: Monitor
+    let checkForUpdates: () -> Void
     @State private var page: Page = .overview
     var body: some View {
         HStack(spacing: 0) {
@@ -55,7 +58,7 @@ struct ContentView: View {
                     case .diagnostics: DiagnosticsView()
                     case .services: ServicesView()
                     case .history: HistoryView()
-                    case .settings: SettingsView()
+                    case .settings: SettingsView(checkForUpdates: checkForUpdates)
                     }
                 }.padding(.horizontal, 32).padding(.bottom, 32).frame(maxWidth: .infinity, alignment: .leading) }
                 .scrollIndicators(.automatic)
@@ -357,6 +360,7 @@ private struct StatusMenu: View {
 }
 private struct SettingsView: View {
     @EnvironmentObject var monitor: Monitor
+    let checkForUpdates: () -> Void
     @State private var loginStatus = SMAppService.mainApp.status
     @State private var loginError: String?
     @State private var confirmClear = false
@@ -380,6 +384,6 @@ private struct SettingsView: View {
             Divider()
             HStack { Text(tr("历史数据保存在本机")).font(.system(size: 11)).foregroundStyle(muted); Spacer(); Button(tr("清除历史…")) { confirmClear = true } }
         } }
-        Card { VStack(alignment: .leading, spacing: 14) { SectionHeading(title: tr("关于 MacFalcon"), detail: tr("原生 macOS 系统监视器")); Text(tr("使用 macOS 原生接口采样，数据仅保留在本机。部分受保护的进程信息可能因系统权限而不可用。")) .font(.system(size: 12)).foregroundStyle(muted).fixedSize(horizontal: false, vertical: true); infoLine(tr("版本"), Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "0.1.0") } }
+        Card { VStack(alignment: .leading, spacing: 14) { SectionHeading(title: tr("关于 MacFalcon"), detail: tr("原生 macOS 系统监视器")); Text(tr("使用 macOS 原生接口采样，数据仅保留在本机。部分受保护的进程信息可能因系统权限而不可用。")) .font(.system(size: 12)).foregroundStyle(muted).fixedSize(horizontal: false, vertical: true); infoLine(tr("版本"), Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "0.1.0"); Button(tr("检查更新…"), action: checkForUpdates) } }
     }.confirmationDialog(tr("清除全部历史记录？"), isPresented: $confirmClear, titleVisibility: .visible) { Button(tr("清除历史"), role: .destructive) { monitor.clearHistory() }; Button(tr("取消"), role: .cancel) {} } message: { Text(tr("此操作会删除本机保存的采样和进程快照。")) } }
 }

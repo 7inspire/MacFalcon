@@ -50,9 +50,13 @@ jobs:
           security list-keychains -d user -s "$keychain"
           security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k "$password" "$keychain"
           ./scripts/notarize-release.sh
+      - name: Create signed update feed
+        env:
+          SPARKLE_PRIVATE_KEY: ${{ secrets.SPARKLE_PRIVATE_KEY }}
+        run: bash scripts/create-appcast.sh
       - name: Publish release
         shell: bash
         run: |
           set -euo pipefail
           version="${GITHUB_REF_NAME#v}"
-          gh release create "$GITHUB_REF_NAME" "dist/MacFalcon-$version-arm64.dmg" dist/SHA256SUMS.txt --title "MacFalcon $version" --notes-file docs/RELEASE_NOTES_NOTARIZED.md --generate-notes --verify-tag
+          gh release create "$GITHUB_REF_NAME" "dist/MacFalcon-$version-arm64.dmg" dist/SHA256SUMS.txt dist/appcast.xml --title "MacFalcon $version" --notes-file docs/RELEASE_NOTES_NOTARIZED.md --generate-notes --verify-tag
